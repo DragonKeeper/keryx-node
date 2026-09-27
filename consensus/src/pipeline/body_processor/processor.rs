@@ -179,6 +179,7 @@ pub(super) fn witness_scoped_error(e: &RuleError) -> bool {
             | RuleError::BadPomProofV4(_)
             | RuleError::PomFinalStateMismatch(_, _)
             | RuleError::PomUnknownTier(_)
+            | RuleError::PomDeclaredTierMismatch(_, _)
     )
 }
 
@@ -481,6 +482,7 @@ mod tests {
             RuleError::BadPomProofV4(PomV4VerifyError::MissingV4),
             RuleError::PomFinalStateMismatch(1, 2),
             RuleError::PomUnknownTier(7),
+            RuleError::PomDeclaredTierMismatch(3, 2),
         ];
         for e in &witness_scoped {
             assert!(!marks_block_invalid(e, true), "{e:?} must not poison the block hash post-gate");
